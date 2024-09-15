@@ -101,6 +101,13 @@ def webinar():
 
     return render_template('webinar.html', details=details)
 
+@app.route('/clear_flash_and_return')
+def clear_flash_and_return():
+    # Clear flash messages
+    session.pop('_flashes', None)
+    # Redirect to the home page
+    return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
