@@ -131,6 +131,11 @@
             <button onclick="copyAllDetails()">Copy All</button>
             <button onclick="window.location.href='{{ url_for('clear_flash_and_return') }}'">Return</button>
         </div>
+        <div style="margin-top: 20px;">
+            <a href="https://my.webinar.net/webinars/{{ details['webinar']['id'] }}/general" target="_blank">
+                Take me directly to General Settings
+            </a>
+        </div>
     </div>
 </body>
 </html>

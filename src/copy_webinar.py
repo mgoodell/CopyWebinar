@@ -3,6 +3,7 @@
 from flask import session
 import warnings
 import requests
+import os
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -13,6 +14,10 @@ def init():
 # Function to copy the webinar
 def webinar_copy(webinar_id, api_key, api_secret, title, source, schedule_type, schedule_start, schedule_end,
                  time_zone, copy_media):
+
+    # Disable proxy settings globally
+    os.environ['HTTP_PROXY'] = ''
+    os.environ['HTTPS_PROXY'] = ''
 
     url = f"https://api.webinar.net/v2/webinars/{webinar_id}/copy"
     auth = (api_key, api_secret)
@@ -40,8 +45,13 @@ def webinar_copy(webinar_id, api_key, api_secret, title, source, schedule_type, 
     }
 
     try:
-        response = requests.post(url, auth=auth, json=payload)
-
+        # Disable proxies explicitly in the requests call
+        response = requests.post(
+            url,
+            auth=auth,
+            json=payload,
+            proxies={"http": None, "https": None}  # Disable proxy
+        )
         if response.status_code == 200:
             # Extract new webinar ID from the nested "webinar" object in the response
             new_webinar_id = response.json().get('webinar', {}).get('id')
