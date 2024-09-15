@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Webinar Details</title>
+    <!-- Link to the same CSS file used in home.html -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Inline styles to ensure centering and background color */
+        body {
+            background-color: #f0f0f0; /* Replace with the actual background color from home.html */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left; /* Center text inside the container */
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+            position: relative; /* Position relative to allow absolute positioning of the copy icon */
+        }
+
+        .copy-icon {
+            margin-left: 10px;
+            cursor: pointer;
+            color: #007bff;
+            font-size: 14px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+    <script>
+    function copyToClipboard(text, element) {
+        navigator.clipboard.writeText(text).then(function() {
+            // Change tooltip text to "Copied"
+            element.setAttribute('title', 'Copied');
+            element.classList.add('tooltip-copied');
+
+            // Revert the tooltip back to "Copy" after 1.5 seconds
+            setTimeout(function() {
+                element.setAttribute('title', 'Copy');
+                element.classList.remove('tooltip-copied');
+            }, 1500);
+        }).catch(function(err) {
+            console.error("Could not copy text: ", err);
+        });
+    }
+
+    function copyAllDetails() {
+        // Construct the full details string to copy without extra whitespace
+        const details =
+            "Title: {{ details['webinar']['title'] }}\n" +
+            "Webinar Key: {{ details['webinar']['webinarKey'] }}\n" +
+            "Presenter URL: {{ details['webinar']['urls']['presenter'] }}\n" +
+            "Audience URL: {{ details['webinar']['urls']['audience'] }}\n" +
+            "Reporting URL: {{ details['webinar']['urls']['reporting'] }}\n" +
+            "AutoJoin URL: {{ details['webinar']['urls']['autoJoin'] }}\n" +
+            "Integration URL: {{ details['webinar']['urls']['integration'] }}";
+
+        // Copy all details to clipboard
+        navigator.clipboard.writeText(details).catch(function(err) {
+            console.error("Could not copy text: ", err);
+        });
+    }
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Webinar Details</h1>
+
+        <p><strong>Webinar Title:</strong> {{ details['webinar']['title'] }}</p>
+        <p><strong>Webinar Key:</strong> {{ details['webinar']['webinarKey'] }}</p>
+        <p>
+            <strong>Presenter URL:</strong>
+            <a href="{{ details['webinar']['urls']['presenter'] }}">{{ details['webinar']['urls']['presenter'] }}</a>
+            <i class="fa fa-copy copy-icon" title="Copy" onclick="copyToClipboard('{{ details['webinar']['urls']['presenter'] }}', this)"></i>
+        </p>
+        <p>
+            <strong>Audience URL:</strong>
+            <a href="{{ details['webinar']['urls']['audience'] }}">{{ details['webinar']['urls']['audience'] }}</a>
+            <i class="fa fa-copy copy-icon" title="Copy" onclick="copyToClipboard('{{ details['webinar']['urls']['audience'] }}', this)"></i>
+        </p>
+        <p>
+            <strong>Reporting URL:</strong>
+            <a href="{{ details['webinar']['urls']['reporting'] }}">{{ details['webinar']['urls']['reporting'] }}</a>
+            <i class="fa fa-copy copy-icon" title="Copy" onclick="copyToClipboard('{{ details['webinar']['urls']['reporting'] }}', this)"></i>
+        </p>
+        <p>
+            <strong>AutoJoin URL:</strong>
+            <a href="{{ details['webinar']['urls']['autoJoin'] }}">{{ details['webinar']['urls']['autoJoin'] }}</a>
+            <i class="fa fa-copy copy-icon" title="Copy" onclick="copyToClipboard('{{ details['webinar']['urls']['autoJoin'] }}', this)"></i>
+        </p>
+        <p>
+            <strong>Integration URL:</strong>
+            <a href="{{ details['webinar']['urls']['integration'] }}">{{ details['webinar']['urls']['integration'] }}</a>
+            <i class="fa fa-copy copy-icon" title="Copy" onclick="copyToClipboard('{{ details['webinar']['urls']['integration'] }}', this)"></i>
+        </p>
+
+        <div class="button-container">
+            <button onclick="copyAllDetails()">Copy All</button>
+            <button onclick="window.location.href='{{ url_for('home') }}'">Return</button>
+        </div>
+    </div>
+</body>
+</html>

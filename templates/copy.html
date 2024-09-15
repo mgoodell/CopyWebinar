@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Webinar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Add the favicon link -->
+    <link rel="icon" href="https://www.webinar.net/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <h1>Webinar Details</h1>
+
+    <form method="POST" action="/copy">
+        <label for="title">Webinar Title <span style="color: red;">*</span></label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="source">Presentation Source <span style="color: red;">*</span></label>
+        <select id="source" name="source">
+            <option value="audio-only" selected>Audio Only</option>
+            <option value="webcam-and-audio">Webcam and Audio</option>
+            <option value="rtmp-stream">RTMP Stream</option>
+            <option value="media-file">Media File</option>
+        </select><br><br>
+
+        <label for="type">Schedule Type <span style="color: red;">*</span></label>
+        <select id="type" name="type">
+            <option value="live">Live</option>
+            <option value="simu-live">Pre-Recorded Live</option>
+            <option value="on-demand">On-Demand</option>
+        </select><br><br>
+
+        <label for="start">Start Date/Time <span style="color: red;">*</span></label>
+        <input type="datetime-local" id="start" name="start" required><br><br>
+
+        <label for="end">End Date/Time <span style="color: red;">*</span></label>
+        <input type="datetime-local" id="end" name="end" required><br><br>
+
+        <!--  IANA (Internet Assigned Numbers Authority) Time Zone Database format -->
+        <label for="timeZone">Time Zone <span style="color: red;">*</span></label>
+        <select id="timeZone" name="timeZone">
+            <option value="America/New_York">Eastern Time (US & Canada)</option>
+            <option value="America/Chicago">Central Time (US & Canada)</option>
+            <option value="America/Denver">Mountain Time (US & Canada)</option>
+            <option value="America/Los_Angeles">Pacific Time (US & Canada)</option>
+            <option value="America/Anchorage">Alaskan Time (US)</option>
+            <option value="Pacific/Honolulu">Hawaii-Aleutian Time (US)</option>
+            <option value="America/Halifax">Atlantic Time (Canada)</option>
+            <option value="America/St_Johns">Newfoundland Time (Canada)</option>
+            <option value="America/Mexico_City">Mexico City</option>
+            <option value="America/Toronto">Eastern Time (Canada)</option>
+            <option value="America/Vancouver">Pacific Time (Canada)</option>
+            <option value="America/Bogota">Bogota, Lima, Quito</option>
+            <option value="America/Caracas">Caracas</option>
+            <option value="America/Santiago">Santiago</option>
+            <option value="America/Argentina/Buenos_Aires">Buenos Aires</option>
+            <option value="America/Sao_Paulo">Brasilia</option>
+            <option value="America/Montevideo">Montevideo</option>
+            <option value="America/Guayaquil">Guayaquil</option>
+            <option value="America/Asuncion">Asuncion</option>
+            <option value="America/Panama">Panama</option>
+        </select><br><br>
+
+        <label for="copyMedia">Copy the Presentation Media <span style="color: red;">*</span></label>
+        <select id="copyMedia" name="copyMedia">
+            <option value="No" selected>No</option>
+            <option value="Yes">Yes</option>
+        </select><br><br>
+
+        <button type="submit" name="copy">Copy</button>
+        <button type="button" name="cancel" onclick="window.location.href='/'">Cancel</button> <!-- Changed type to 'button' and added onclick -->
+    </form>
+</body>
+</html>

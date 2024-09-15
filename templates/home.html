@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Copy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Add the favicon link -->
+    <link rel="icon" href="https://www.webinar.net/favicon.ico" type="image/x-icon">
+
+    <style>
+        /* Styles for messages */
+        .message {
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            text-align: center; /* Center text inside the message box */
+        }
+
+        .message.error {
+            color: #721c24; /* Red color for error */
+            background-color: #f8d7da; /* Light red background for error */
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.info {
+            color: #004085; /* Blue color for info */
+            background-color: #cce5ff; /* Light blue background for info */
+            border: 1px solid #b8daff;
+        }
+
+        /* Center messages under the form */
+        .message-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            max-width: 400px; /* Optional: Control the width of the form */
+            margin: 0 auto;
+        }
+    </style>
+
+    <script>
+        function showSearchingMessage() {
+            clearFlashMessages();
+            document.getElementById('searchingMessage').style.display = 'block';
+        }
+
+        function clearFlashMessages() {
+            document.getElementById('flashMessages').innerHTML = '';
+        }
+
+        function resetFormAndClearMessages() {
+            document.getElementById('webinarKey').value = '';
+            document.getElementById('apiKey').value = '';
+            document.getElementById('apiSecret').value = '';
+            clearFlashMessages(); // Clear flash messages
+        }
+    </script>
+
+</head>
+<body>
+    <h1>webinar.net - Webinar Copy</h1>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <form id="webinarForm" method="POST" action="/" onsubmit="showSearchingMessage()">
+            <label for="webinarKey">Webinar Key <span style="color: red;">*</span></label>
+            <input type="text" id="webinarKey" name="webinarKey" value="{{ request.form.get('webinarKey', '') }}" required><br><br>
+
+            <label for="apiKey">API Key <span style="color: red;">*</span></label>
+            <input type="text" id="apiKey" name="apiKey" value="{{ request.form.get('apiKey', '') }}" required><br><br>
+
+            <label for="apiSecret">API Secret <span style="color: red;">*</span></label>
+            <input type="text" id="apiSecret" name="apiSecret" value="{{ request.form.get('apiSecret', '') }}" required><br>
+
+            <button type="submit" name="copy">Copy</button>
+            <button type="button" onclick="resetFormAndClearMessages()">Reset</button>
+
+            <br><br>
+            webinar.net Support: <a href="https://help.webinar.net/en/articles/8015014-manage-api-credentials" target="_blank">Manage API Credentials</a><br><br>
+        </form>
+    </div>
+
+    <!-- Message Container -->
+    <div class="message-container">
+        <!-- Flash Messages -->
+        <div id="flashMessages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul>
+              {% for category, message in messages %}
+                <li class="message {{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        </div>
+
+        <!-- "Searching for webinar..." message -->
+        <div id="searchingMessage" class="message info" style="display: none;">
+            Searching for webinar to copy.
+        </div>
+    </div>
+
+</body>
+</html>
