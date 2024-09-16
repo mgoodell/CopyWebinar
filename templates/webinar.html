@@ -79,8 +79,9 @@
     function copyAllDetails() {
         // Construct the full details string to copy without extra whitespace
         const details =
-            "Title: {{ details['webinar']['title'] }}\n" +
             "Webinar Key: {{ details['webinar']['webinarKey'] }}\n" +
+            "Title: {{ details['webinar']['title'] }}\n" +
+            "Start Date/Time: {{ details['webinar']['formatted_start'] }}\n" +
             "Presenter URL: {{ details['webinar']['urls']['presenter'] }}\n" +
             "Audience URL: {{ details['webinar']['urls']['audience'] }}\n" +
             "Reporting URL: {{ details['webinar']['urls']['reporting'] }}\n" +
@@ -99,8 +100,9 @@
     <div class="container">
         <h1>Webinar Details</h1>
 
-        <p><strong>Webinar Title:</strong> {{ details['webinar']['title'] }}</p>
         <p><strong>Webinar Key:</strong> {{ details['webinar']['webinarKey'] }}</p>
+        <p><strong>Webinar Title:</strong> {{ details['webinar']['title'] }}</p>
+        <p><strong>Start Date/Time:</strong> {{ details['webinar']['formatted_start'] }}</p>
         <p>
             <strong>Presenter URL:</strong>
             <a href="{{ details['webinar']['urls']['presenter'] }}">{{ details['webinar']['urls']['presenter'] }}</a>
@@ -128,8 +130,9 @@
         </p>
 
         <div class="button-container">
-            <button onclick="copyAllDetails()">Copy All</button>
-            <button onclick="window.location.href='{{ url_for('clear_flash_and_return') }}'">Return</button>
+            <button onclick="copyAllDetails()">Copy All Text</button>
+            <button onclick="window.location.href='{{ url_for('copy') }}'">Copy Another Webinar</button>
+            <button onclick="window.location.href='{{ url_for('clear_flash_and_return') }}'">Return Home</button>
         </div>
         <div style="margin-top: 20px;">
             <a href="https://my.webinar.net/webinars/{{ details['webinar']['id'] }}/general" target="_blank">

@@ -2,6 +2,8 @@
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import os
+from datetime import datetime
+import pytz
 import src.get_webinar_id
 import src.copy_webinar
 import src.get_webinar_info
@@ -94,6 +96,10 @@ def webinar():
 
     # Fetch webinar details
     details = src.get_webinar_info.fetch_webinar_details(new_webinar_id, api_key, api_secret)
+
+    # Format the Start Date/Time
+    formatted_start = src.date_to_iso_format.format_datetime(details['webinar']['latestSchedule']['start'])
+    details['webinar']['formatted_start'] = formatted_start
 
     if not details:
         flash('Failed to retrieve webinar details.', 'error')

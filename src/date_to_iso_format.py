@@ -44,3 +44,14 @@ def convert_to_iso_format(schedule_start, schedule_end, time_zone):
 
     return schedule_start_iso, schedule_end_iso
 
+def format_datetime(iso_datetime_str):
+    # Parse the ISO 8601 datetime string
+    dt = datetime.fromisoformat(iso_datetime_str.replace("Z", "+00:00"))
+
+    # Convert to the desired timezone (Eastern Time)
+    eastern = pytz.timezone('America/New_York')
+    dt = dt.astimezone(eastern)
+
+    # Format the datetime in the desired format
+    formatted_dt = dt.strftime('%A, %B %d, %Y at %I:%M %p (%Z%z) %Z - New York')
+    return formatted_dt
